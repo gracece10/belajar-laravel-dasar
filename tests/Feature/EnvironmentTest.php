@@ -29,7 +29,7 @@ class EnvironmentTest extends TestCase
 
     public function testDefaultEnv()
     {
-        //$author = env('AUTHOR', 'Grace');
+        $author = env('AUTHOR', 'Grace');
         //$author = Env::get('AUTHOR', 'Grace'); //Opsi kedua
         self::assertEquals('Grace', $author);
     }
