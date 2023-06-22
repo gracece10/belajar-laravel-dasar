@@ -5,6 +5,8 @@ namespace Tests\Feature;
 use App\Data\Foo;
 use App\Data\Bar;
 use App\Data\Person;
+use App\Services\HelloService;
+use App\Services\HelloServiceIndonesia;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
@@ -18,7 +20,7 @@ class ServiceContainerTest extends TestCase
 
         self::assertEquals("Foo",$foo->foo());
         self::assertEquals("Foo",$foo2->foo());
-        self::assertEquals($foo,$foo2);
+        self::assertNotSame($foo,$foo2);
     }
 
     public function testBind()
@@ -34,9 +36,9 @@ class ServiceContainerTest extends TestCase
         $person1 = $this->app->make(Person::class);
         $person2 = $this->app->make(Person::class);
 
-        self::assertEquals("Grace",$person1->firstName);
-        self::assertEquals("Grace",$person2->firstName);
-        self::assertEquals($person1,$person2);
+        self::assertEquals("Grace",$person1->firstName); //closure() //new person ("Grace","Amianie");
+        self::assertEquals("Grace",$person2->firstName); //closure() //new person ("Grace","Amianie");
+        self::assertNotSame($person1,$person2);
     }
 
     public function testSingleton()
@@ -47,14 +49,14 @@ class ServiceContainerTest extends TestCase
             return new Person('Grace','Amianie');
         });
 
-        $person1 = $this->app->make(Person::class);
+        $person1 = $this->app->make(Person::class);//new person ('Grace','Amianie'); if no exists
         $person2 = $this->app->make(Person::class);//return existing
         $person3 = $this->app->make(Person::class);//return existing
         $person4 = $this->app->make(Person::class);//return existing
 
         self::assertEquals("Grace",$person1->firstName);
         self::assertEquals("Grace",$person2->firstName);
-        self::assertEquals($person1,$person2);
+        self::assertSame($person1,$person2);
     }
 
     public function testInstance()
@@ -63,13 +65,15 @@ class ServiceContainerTest extends TestCase
         $person = new Person("Grace","Amianie");
         $this->app->instance(Person::class,$person);
 
-        $person1 = $this->app->make(Person::class);
-        $person2 = $this->app->make(Person::class);//return existing
+        $person1 = $this->app->make(Person::class); //$person
+        $person2 = $this->app->make(Person::class);//$person
+        $person3 = $this->app->make(Person::class);//$person
+        $person4 = $this->app->make(Person::class);//$person
 
         self::assertEquals("Grace",$person1->firstName);
         self::assertEquals("Grace",$person2->firstName);
-        self::assertEquals($person,$person1);
-        self::assertEquals($person1,$person2);
+        // self::assertSame($person,$person1);
+        self::assertSame($person1,$person2);
     }
 
     public function testDependencyInjection()
@@ -90,12 +94,14 @@ class ServiceContainerTest extends TestCase
         $bar1 = $this->app->make(Bar::class);
         $bar2 = $this->app->make(Bar::class);
 
-        self::assertSame($foo,$bar->foo);
-        self::assertNotSame($bar1, $bar2);
+        self::assertSame($foo, $bar1->foo);
+
+        self::assertSame($bar1, $bar2);
     }
 
     public function testInterfaceToClass()
     {
+        //$this->app->singleton(HelloService::class, HelloServiceIndonesia::class);
         $this->app->singleton(HelloService::class, function($app){
             return new HelloServiceIndonesia();
         });
