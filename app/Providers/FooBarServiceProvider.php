@@ -4,9 +4,12 @@ namespace App\Providers;
 
 use app\Data\Foo;
 use app\Data\Bar;
+use app\Services\HelloService;
+use app\Services\HelloServiceIndonesia;
+use Illuminate\Contracts\Support\DeferrableProvider;
 use Illuminate\Support\ServiceProvider;
 
-class FooBarServiceProvider extends ServiceProvider
+class FooBarServiceProvider extends ServiceProvider implements DeferrableProvider
 {
     public array $singletons = [
         HelloService::class => HelloServiceIndonesia::class
@@ -18,6 +21,7 @@ class FooBarServiceProvider extends ServiceProvider
      */
     public function register()
     {
+        //echo "FooBarServiceProvider";
         $this->app->singleton(Foo::class, function ($app) {
             return new Foo();
         });
@@ -34,5 +38,9 @@ class FooBarServiceProvider extends ServiceProvider
     public function boot()
     {
         //
+    }
+    public function providers()
+    {
+        return [HelloService::class, Foo::class, Bar::class];
     }
 }

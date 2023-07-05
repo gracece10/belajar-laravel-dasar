@@ -4,6 +4,7 @@ namespace Tests\Feature;
 
 use\App\Data\Foo;
 use\App\Data\Bar;
+use\App\Services\HelloService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
@@ -35,5 +36,10 @@ class FooBarServiceProviderTest extends TestCase
         self::assertSame($helloService1,$helloService2);
 
         self::assertEquals('Halo Grace',$helloService1->hello('Grace'));
+    }
+
+    public function testEmpty()
+    {
+        self::assertTrue(true);
     }
 }
