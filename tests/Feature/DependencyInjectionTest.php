@@ -10,12 +10,16 @@ use Tests\TestCase;
 
 class DependencyInjectionTest extends TestCase
 {
+    
     public function testDependencyInjection()
     {
+        //melakukan dependencyinjection secara manual
         $foo = new Foo();
         $bar = new Bar($foo);
-        // $bar->setFoo($foo);
-        // $bar->foo = $foo;
+        //function
+        // $bar->setFoo($foo); 
+        //atribut atau properti
+        // $bar->foo = $foo; 
         self::assertEquals('Foo and Bar', $bar->bar());
     }
 }

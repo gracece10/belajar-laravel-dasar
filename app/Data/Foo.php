@@ -4,8 +4,8 @@ namespace App\Data;
 
 class Foo
 {
-    public function foo(): string
-    {
-        return "Foo";
-    }
+   public function foo(): string
+   {
+      return "Foo";
+   }
 }

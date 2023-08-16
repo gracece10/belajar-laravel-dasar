@@ -12,6 +12,6 @@ class Bar
     }
 
     public function bar(): string {
-        return $this->foo->foo() . " and Bar";
+        return $this->foo->foo() . ' and Bar';
     }
 }

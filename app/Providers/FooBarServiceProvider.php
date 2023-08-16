@@ -2,10 +2,10 @@
 
 namespace App\Providers;
 
-use app\Data\Foo;
-use app\Data\Bar;
-use app\Services\HelloService;
-use app\Services\HelloServiceIndonesia;
+use App\Data\Foo; 
+use App\Data\Bar;
+use App\Services\HelloService;
+use App\Services\HelloServiceIndonesia; 
 use Illuminate\Contracts\Support\DeferrableProvider;
 use Illuminate\Support\ServiceProvider;
 
@@ -13,7 +13,9 @@ class FooBarServiceProvider extends ServiceProvider implements DeferrableProvide
 {
     public array $singletons = [
         HelloService::class => HelloServiceIndonesia::class
-    ];
+     ]; 
+    
+
     /**
      * Register services.
      *
@@ -21,6 +23,11 @@ class FooBarServiceProvider extends ServiceProvider implements DeferrableProvide
      */
     public function register()
     {
+        // Mengganti binding HelloService sesuai konfigurasi
+        // $this->app->singleton(HelloService::class, function ($app) {
+        //     return $app->make(HelloServiceIndonesia::class);
+        // });
+
         //echo "FooBarServiceProvider";
         $this->app->singleton(Foo::class, function ($app) {
             return new Foo();
@@ -39,7 +46,7 @@ class FooBarServiceProvider extends ServiceProvider implements DeferrableProvide
     {
         //
     }
-    public function providers()
+    public function provides()
     {
         return [HelloService::class, Foo::class, Bar::class];
     }

@@ -12,7 +12,8 @@ class AppEnvironmentTest extends TestCase
 
     public function testAppEnv()
     {
-        // var_dump(App::environment());
+        // var_dump(App::environment()); 
+        //untuk mengecek sedang di environment apa, hasilnya yang keluar adalah "testing" bisa dicek diphpunit
         if(App::environment('testing'))
         {
             //kode program kita

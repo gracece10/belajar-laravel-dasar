@@ -16,3 +16,19 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('/pzn',function () {
+    return "Hello Grace Oscarissa Amianie";
+});
+
+Route::redirect('/youtube','/pzn');
+
+Route::fallback(function (){
+    return "404 by Grace Oscarissa Amianie";
+});
+
+Route::view('/hello','hello',['name' => 'Grace']);
+
+Route::get('/hello-again', function (){
+    return view('hello', ['name' => 'Grace']);
+});

@@ -4,6 +4,7 @@ namespace Tests\Feature;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+// use Illuminate\Support\Env; //untuk opsi kedua
 use Tests\TestCase;
 
 class EnvironmentTest extends TestCase
